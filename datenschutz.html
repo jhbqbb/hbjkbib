@@ -21,7 +21,8 @@
       a { color: inherit; text-decoration: none; }
       .container { width: min(1000px, 92vw); margin: 0 auto; }
       header { padding: 24px 0; border-bottom: 1px solid rgba(216,211,203,0.18); }
-      .brand { font-family: "Sora", sans-serif; font-weight: 600; }
+      .brand { font-family: "Sora", sans-serif; font-weight: 600; display: flex; align-items: center; gap: 12px; }
+      .brand svg { width: 40px; height: 40px; border-radius: 10px; border: 1px solid rgba(216,211,203,0.18); background: #0f0f0f; }
       .section { padding: 64px 0; }
       .card { border: 1px solid rgba(216,211,203,0.18); border-radius: 16px; padding: 24px; background: #141414; }
       .btn { display: inline-flex; padding: 10px 18px; border-radius: 999px; border: 1px solid rgba(216,211,203,0.18); }
@@ -31,7 +32,28 @@
   <body>
     <header>
       <div class="container">
-        <div class="brand">FlowGenius</div>
+        <div class="brand">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="FlowGenius Icon">
+            <defs>
+              <radialGradient id="core-datenschutz" cx="35%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#d8d3cb" stop-opacity="0.9"/>
+                <stop offset="60%" stop-color="#6b6b6b" stop-opacity="0.2"/>
+                <stop offset="100%" stop-color="#0f0f0f" stop-opacity="1"/>
+              </radialGradient>
+              <linearGradient id="ring-datenschutz" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d8d3cb" stop-opacity="0.85"/>
+                <stop offset="100%" stop-color="#d8d3cb" stop-opacity="0.25"/>
+              </linearGradient>
+            </defs>
+            <rect width="200" height="200" rx="28" fill="#0f0f0f"/>
+            <ellipse cx="100" cy="100" rx="72" ry="36" fill="none" stroke="url(#ring-datenschutz)" stroke-width="3" transform="rotate(-18 100 100)"/>
+            <circle cx="100" cy="100" r="34" fill="url(#core-datenschutz)"/>
+            <circle cx="56" cy="88" r="3.5" fill="#d8d3cb" opacity="0.7"/>
+            <circle cx="144" cy="112" r="3.5" fill="#d8d3cb" opacity="0.7"/>
+            <circle cx="100" cy="52" r="2.8" fill="#d8d3cb" opacity="0.55"/>
+          </svg>
+          FlowGenius
+        </div>
         <div style="margin-top: 12px;">
           <a class="btn" href="index.html">Zurück zur Startseite</a>
         </div>
