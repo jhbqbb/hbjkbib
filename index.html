@@ -323,6 +323,9 @@
         padding: 24px;
         background: var(--bg-elevated);
         box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.25s ease, border 0.25s ease, box-shadow 0.25s ease;
       }
 
       .card h3 {
@@ -332,12 +335,74 @@
 
       .list {
         display: grid;
-        gap: 12px;
-        margin-top: 12px;
+        gap: 10px;
+        margin-top: 14px;
+        list-style: none;
       }
 
-      .list li {
+      .list li,
+      .service-pill {
         color: var(--text-muted);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -60% -20% auto;
+        height: 140px;
+        background: radial-gradient(circle, rgba(216, 211, 203, 0.12), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+      }
+
+      .card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid rgba(216, 211, 203, 0.08);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(216, 211, 203, 0.35);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+      }
+
+      .card:hover::before,
+      .card:hover::after {
+        opacity: 1;
+      }
+
+      .card .card-meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        background: rgba(15, 15, 15, 0.7);
+        margin-bottom: 14px;
+      }
+
+      .pill-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .service-pill {
+        border: 1px solid rgba(216, 211, 203, 0.2);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        background: rgba(18, 18, 22, 0.9);
       }
 
       .cta-panel {
@@ -363,10 +428,198 @@
         border: 0;
       }
 
+      .faq-list {
+        display: grid;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .faq-item {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 16px 18px;
+        background: var(--bg-elevated);
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .faq-item[open] {
+        border-color: rgba(216, 211, 203, 0.35);
+        box-shadow: var(--shadow);
+      }
+
+      .faq-item summary {
+        cursor: pointer;
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: 1rem;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-item summary::before {
+        content: "";
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid var(--text);
+        border-bottom: 2px solid var(--text);
+        transform: rotate(-45deg);
+        margin-right: 6px;
+        transition: transform 0.2s ease;
+      }
+
+      .faq-item[open] summary::before {
+        transform: rotate(45deg);
+      }
+
+      .faq-item p {
+        margin-top: 10px;
+        color: var(--text-muted);
+      }
+
       footer {
         border-top: 1px solid var(--border);
         padding: 40px 0 56px;
         color: var(--text-muted);
+      }
+
+      /* Chatbot */
+      .chatbot {
+        position: fixed;
+        right: 22px;
+        bottom: 22px;
+        z-index: 200;
+        font-family: "Source Sans 3", system-ui, sans-serif;
+      }
+
+      .chat-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 16px;
+        background: rgba(12, 12, 16, 0.9);
+        color: #0f0f0f;
+        border: 1px solid var(--border);
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .chat-toggle svg {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: #d8d3cb;
+        display: block;
+      }
+
+      .chat-window {
+        position: absolute;
+        right: 0;
+        bottom: 58px;
+        width: min(360px, 86vw);
+        background: rgba(12, 12, 16, 0.98);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: none;
+      }
+
+      .chat-window.open {
+        display: block;
+      }
+
+      .chat-header {
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: "Sora", system-ui, sans-serif;
+      }
+
+      .chat-header span {
+        color: var(--text);
+      }
+
+      .chat-body {
+        padding: 14px 16px;
+        max-height: 320px;
+        overflow-y: auto;
+        display: grid;
+        gap: 12px;
+      }
+
+      .chat-msg {
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+
+      .chat-msg.bot {
+        background: rgba(216, 211, 203, 0.08);
+        color: var(--text);
+        border: 1px solid rgba(216, 211, 203, 0.12);
+      }
+
+      .chat-msg.user {
+        background: rgba(216, 211, 203, 0.18);
+        color: #0f0f0f;
+        justify-self: end;
+      }
+
+      .chat-input {
+        border-top: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 8px;
+        padding: 12px;
+        background: rgba(10, 10, 14, 0.95);
+      }
+
+      .chat-input input {
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: var(--text);
+        outline: none;
+      }
+
+      .chat-input button {
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: none;
+        background: var(--text);
+        color: #0f0f0f;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .chat-quick {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+      }
+
+      .chat-quick button {
+        background: rgba(216, 211, 203, 0.08);
+        color: var(--text);
+        border: 1px solid rgba(216, 211, 203, 0.2);
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        cursor: pointer;
       }
 
       .footer-grid {
@@ -485,40 +738,48 @@
           </p>
           <div class="grid-2">
             <div class="card">
+              <div class="card-meta">AI Agents</div>
               <h3>AI Agents für Kundenservice &amp; intern</h3>
-              <p>Digitale Assistenten übernehmen Anfragen, Strukturierung und nächste Schritte.</p>
-              <ul class="list">
-                <li>Live-Chat- und E-Mail-Agent für Website und Support</li>
-                <li>Ticket-Klassifizierung und Priorisierung</li>
-                <li>Interne Assistenz für Vertrieb und Operations</li>
-              </ul>
+              <p>Digitale Assistenten übernehmen Anfragen, strukturieren Inhalte und treiben nächste Schritte.</p>
+              <div class="pill-grid">
+                <span class="service-pill">Live-Chat &amp; E-Mail Agent</span>
+                <span class="service-pill">Ticket-Priorisierung</span>
+                <span class="service-pill">Interne Assistenz</span>
+                <span class="service-pill">Antworten im CI</span>
+              </div>
             </div>
             <div class="card">
+              <div class="card-meta">n8n Workflows</div>
               <h3>n8n Workflow-Automatisierung</h3>
               <p>Wir verbinden CRM, E-Mail, ERP und Fachtools über stabile, dokumentierte Abläufe.</p>
-              <ul class="list">
-                <li>Lead-Flow von Website bis CRM</li>
-                <li>Terminbuchungen und Status-Updates</li>
-                <li>Reporting und Daten-Synchronisierung</li>
-              </ul>
+              <div class="pill-grid">
+                <span class="service-pill">Lead-Flow bis CRM</span>
+                <span class="service-pill">Termin-Updates</span>
+                <span class="service-pill">Reporting &amp; Sync</span>
+                <span class="service-pill">Fehlerfreie Übergaben</span>
+              </div>
             </div>
             <div class="card">
+              <div class="card-meta">API &amp; LLM</div>
               <h3>API &amp; LLM Integrationen</h3>
               <p>Wir erweitern bestehende Systeme, damit Daten intelligent genutzt werden.</p>
-              <ul class="list">
-                <li>LLM-Zusammenfassungen und Auswertungen</li>
-                <li>Automatische Datenanreicherung aus E-Mails &amp; PDFs</li>
-                <li>Mehrsprachige Kommunikation</li>
-              </ul>
+              <div class="pill-grid">
+                <span class="service-pill">LLM‑Auswertungen</span>
+                <span class="service-pill">PDF &amp; Mail Parsing</span>
+                <span class="service-pill">Mehrsprachig</span>
+                <span class="service-pill">API‑Anbindungen</span>
+              </div>
             </div>
             <div class="card">
+              <div class="card-meta">Custom</div>
               <h3>Individuelle AI-Lösungen</h3>
               <p>Von der Analyse bis zur Umsetzung – passend zu Ihrem Geschäftsmodell.</p>
-              <ul class="list">
-                <li>Termin- und Angebotsautomatisierung</li>
-                <li>Dashboards &amp; KPI-Tracking</li>
-                <li>Custom Integrationen für Spezialprozesse</li>
-              </ul>
+              <div class="pill-grid">
+                <span class="service-pill">Termin‑Automation</span>
+                <span class="service-pill">Angebote &amp; Verträge</span>
+                <span class="service-pill">KPI‑Dashboards</span>
+                <span class="service-pill">Spezialprozesse</span>
+              </div>
             </div>
           </div>
         </div>
@@ -600,23 +861,39 @@
         <div class="container">
           <span class="eyebrow">FAQ</span>
           <h2 class="section-title">Häufige Fragen</h2>
-          <div class="grid-2">
-            <div class="card">
-              <h3>Was kostet eine AI-Automatisierung?</h3>
-              <p>Die Kosten hängen vom Umfang ab. Nach der Analyse erhalten Sie ein konkretes Angebot.</p>
-            </div>
-            <div class="card">
-              <h3>Wie lange dauert die Umsetzung?</h3>
-              <p>Je nach Umfang 2–8 Wochen. Für Quick Wins oft schneller.</p>
-            </div>
-            <div class="card">
-              <h3>Ist das DSGVO-konform?</h3>
-              <p>Ja. Wir planen Datenflüsse und Hosting nach DSGVO-Standards.</p>
-            </div>
-            <div class="card">
-              <h3>Brauche ich technisches Vorwissen?</h3>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>Was kostet eine AI-Automatisierung?</summary>
+              <p>Die Kosten richten sich nach Umfang und Integrationen. Nach der Analyse erhalten Sie ein klares Angebot.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Wie lange dauert die Umsetzung?</summary>
+              <p>In der Regel 2–8 Wochen. Quick Wins können oft in wenigen Tagen live gehen.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Ist das DSGVO-konform?</summary>
+              <p>Ja. Wir planen Datenflüsse, Zugriffe und Hosting nach DSGVO-Standards.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Brauche ich technisches Vorwissen?</summary>
               <p>Nein. Wir übernehmen die Umsetzung und erklären alles verständlich.</p>
-            </div>
+            </details>
+            <details class="faq-item">
+              <summary>Für welche Prozesse eignet sich AI?</summary>
+              <p>Für wiederkehrende Aufgaben, klare Regeln und textbasierte Abläufe in Service, Sales und Operations.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Welche Tools integriert ihr?</summary>
+              <p>CRM, E-Mail, ERP, Ticketsysteme, Slack/Teams, Datenbanken und branchenspezifische Tools.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Wie läuft die Zusammenarbeit ab?</summary>
+              <p>Mit klaren Meilensteinen: Analyse, Umsetzung, Test, Launch und Optimierung.</p>
+            </details>
+            <details class="faq-item">
+              <summary>Gibt es Support nach dem Launch?</summary>
+              <p>Ja. Wir bieten Monitoring, Weiterentwicklung und langfristige Betreuung.</p>
+            </details>
           </div>
         </div>
       </section>
@@ -660,5 +937,160 @@
         </div>
       </div>
     </footer>
+
+    <!-- FAQ Chatbot (no backend) -->
+    <div class="chatbot" id="chatbot">
+      <div class="chat-window" id="chat-window" aria-live="polite">
+        <div class="chat-header">
+          <span>FlowGenius Chat</span>
+          <button class="btn btn-secondary" id="chat-close" type="button">Schließen</button>
+        </div>
+        <div class="chat-body" id="chat-body">
+          <div class="chat-msg bot">
+            Hallo! Ich bin der FlowGenius Chat. Frag mich gern zu Leistungen, Preisen oder dem Ablauf.
+            <div class="chat-quick">
+              <button type="button" data-q="Leistungen">Leistungen</button>
+              <button type="button" data-q="Preise">Preise</button>
+              <button type="button" data-q="Prozess">Prozess</button>
+              <button type="button" data-q="Demo">Demo</button>
+            </div>
+          </div>
+        </div>
+        <form class="chat-input" id="chat-form">
+          <input id="chat-input" type="text" placeholder="Ihre Frage eingeben..." autocomplete="off" />
+          <button type="submit">Senden</button>
+        </form>
+      </div>
+      <button class="chat-toggle" id="chat-toggle" type="button" aria-label="Chat öffnen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="AI Bot Icon">
+          <rect width="200" height="200" rx="28" fill="#0f0f0f"/>
+          <rect x="40" y="56" width="120" height="88" rx="18" fill="#d8d3cb"/>
+          <rect x="70" y="40" width="60" height="20" rx="10" fill="#d8d3cb"/>
+          <circle cx="80" cy="100" r="10" fill="#0f0f0f"/>
+          <circle cx="120" cy="100" r="10" fill="#0f0f0f"/>
+          <rect x="70" y="124" width="60" height="10" rx="5" fill="#0f0f0f"/>
+          <circle cx="100" cy="38" r="6" fill="#d8d3cb"/>
+          <rect x="98" y="26" width="4" height="12" rx="2" fill="#d8d3cb"/>
+        </svg>
+      </button>
+    </div>
+
+    <script>
+      (function () {
+        const chatToggle = document.getElementById("chat-toggle");
+        const chatWindow = document.getElementById("chat-window");
+        const chatClose = document.getElementById("chat-close");
+        const chatForm = document.getElementById("chat-form");
+        const chatInput = document.getElementById("chat-input");
+        const chatBody = document.getElementById("chat-body");
+
+        const whatsappNumber = "4917683210136";
+        const whatsappText =
+          "Hallo FlowGenius, ich habe eine Frage zur AI-Automatisierung. Mein Anliegen ist: ";
+
+        const qa = [
+          {
+            keys: ["leistung", "services", "angebot", "agent", "automation", "workflows"],
+            answer:
+              "Unsere Leistungen: AI Agents, n8n-Workflows, API/LLM-Integrationen und individuelle AI-Lösungen. Sag mir gern kurz deinen Prozess, dann gebe ich eine Empfehlung."
+          },
+          {
+            keys: ["preis", "kosten", "budget", "paket"],
+            answer:
+              "Die Preise hängen vom Umfang ab. Wir starten meist mit einer Prozess-Analyse und definieren dann ein klares Angebot."
+          },
+          {
+            keys: ["prozess", "ablauf", "wie", "umsetzung"],
+            answer:
+              "Unser Ablauf: Analyse → Konzept → Entwicklung → Testing → Launch & Optimierung. Transparent und mit klaren Meilensteinen."
+          },
+          {
+            keys: ["dauer", "zeit", "wann", "wie lange"],
+            answer:
+              "Je nach Umfang dauert die Umsetzung meist 2–8 Wochen. Quick Wins gehen oft schneller."
+          },
+          {
+            keys: ["dsgvo", "datenschutz"],
+            answer:
+              "Ja, wir planen Datenflüsse und Hosting DSGVO-konform und dokumentieren alles sauber."
+          },
+          {
+            keys: ["demo", "call", "termin", "kalender"],
+            answer:
+              "Du kannst direkt einen Demo-Call buchen. Ich kann dir den Link geben oder dich dorthin führen."
+          }
+        ];
+
+        function addMessage(text, type) {
+          const div = document.createElement("div");
+          div.className = `chat-msg ${type}`;
+          div.textContent = text;
+          chatBody.appendChild(div);
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function findAnswer(input) {
+          const lower = input.toLowerCase();
+          for (const item of qa) {
+            if (item.keys.some((k) => lower.includes(k))) {
+              return item.answer;
+            }
+          }
+          return null;
+        }
+
+        function fallbackToWhatsApp(input) {
+          addMessage(
+            "Ich bin mir nicht ganz sicher. Schreib uns kurz auf WhatsApp, dann helfen wir direkt weiter.",
+            "bot"
+          );
+          const url =
+            "https://wa.me/" +
+            whatsappNumber +
+            "?text=" +
+            encodeURIComponent(whatsappText + input);
+          const link = document.createElement("a");
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          link.className = "chat-msg bot";
+          link.textContent = "WhatsApp öffnen";
+          chatBody.appendChild(link);
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function handleInput(value) {
+          if (!value.trim()) return;
+          addMessage(value, "user");
+          const answer = findAnswer(value);
+          if (answer) {
+            addMessage(answer, "bot");
+          } else {
+            fallbackToWhatsApp(value);
+          }
+        }
+
+        chatToggle.addEventListener("click", () => {
+          chatWindow.classList.toggle("open");
+        });
+
+        chatClose.addEventListener("click", () => {
+          chatWindow.classList.remove("open");
+        });
+
+        chatForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const value = chatInput.value;
+          chatInput.value = "";
+          handleInput(value);
+        });
+
+        chatBody.addEventListener("click", (e) => {
+          const btn = e.target.closest("button[data-q]");
+          if (!btn) return;
+          handleInput(btn.getAttribute("data-q"));
+        });
+      })();
+    </script>
   </body>
 </html>
