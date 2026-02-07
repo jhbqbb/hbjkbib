@@ -71,6 +71,124 @@
         position: fixed;
         inset: 0;
         z-index: 999;
+        background: #0f0f0f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: calc(24px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right))
+          calc(24px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left));
+        overflow: hidden;
+      }
+
+      .color-orb {
+        position: absolute;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.25;
+        animation: floatOrb 10s ease-in-out infinite;
+      }
+
+      .orb-1 {
+        background: #6d6dff;
+        top: -80px;
+        left: -60px;
+      }
+
+      .orb-2 {
+        background: #a36bff;
+        bottom: -120px;
+        right: -80px;
+        animation-delay: -2s;
+      }
+
+      .orb-3 {
+        background: #2bb3ff;
+        top: 30%;
+        right: 15%;
+        width: 240px;
+        height: 240px;
+        animation-delay: -4s;
+      }
+
+      .coming-card {
+        position: relative;
+        z-index: 2;
+        max-width: 720px;
+        border: 1px solid rgba(216, 211, 203, 0.25);
+        border-radius: 24px;
+        padding: 36px;
+        background: rgba(12, 12, 16, 0.85);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .coming-title {
+        font-family: "Sora", system-ui, sans-serif;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        letter-spacing: -0.02em;
+        margin-bottom: 12px;
+      }
+
+      .coming-sub {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+
+      .coming-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: 999px;
+        border: 1px solid rgba(216, 211, 203, 0.2);
+        color: var(--text-muted);
+        background: rgba(20, 20, 20, 0.8);
+        margin-bottom: 18px;
+      }
+
+      .pulse {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6d6dff;
+        box-shadow: 0 0 12px rgba(109, 109, 255, 0.8);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 0.6;
+        }
+      }
+
+      @keyframes floatOrb {
+        0%,
+        100% {
+          transform: translateY(0) translateX(0);
+        }
+        50% {
+          transform: translateY(-20px) translateX(10px);
+        }
+      }
+
+      body.coming-active {
+        overflow: hidden;
+      }
+
+      .coming-soon {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
         background: radial-gradient(circle at 30% 20%, rgba(216, 211, 203, 0.08), transparent 45%),
           radial-gradient(circle at 80% 70%, rgba(216, 211, 203, 0.06), transparent 50%),
           #0f0f0f;
@@ -791,7 +909,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="coming-active">
     <!-- Sticky Navbar with smooth scroll anchor links -->
     <header>
       <input type="checkbox" id="nav-toggle" />
@@ -1169,5 +1287,19 @@
       </div>
     </footer>
 
+    <!-- Coming Soon Overlay -->
+    <div class="coming-soon" role="status" aria-live="polite">
+      <div class="color-orb orb-1" aria-hidden="true"></div>
+      <div class="color-orb orb-2" aria-hidden="true"></div>
+      <div class="color-orb orb-3" aria-hidden="true"></div>
+      <div class="coming-card animate-fade">
+        <div class="coming-badge">
+          <span class="pulse" aria-hidden="true"></span>
+          Stay tuned
+        </div>
+        <div class="coming-title">We will launch in 2027.</div>
+        <div class="coming-sub">Your FlowGenius Team</div>
+      </div>
+    </div>
   </body>
 </html>
