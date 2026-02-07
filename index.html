@@ -165,6 +165,7 @@
         background-size: 140px 140px;
         opacity: 0.12;
         mask-image: radial-gradient(circle at 40% 30%, black 0%, transparent 70%);
+        animation: gridShift 18s linear infinite;
       }
 
       .dot-wave {
@@ -174,6 +175,78 @@
         background-size: 9px 9px;
         opacity: 0.2;
         clip-path: polygon(0 45%, 25% 38%, 50% 42%, 70% 34%, 100% 40%, 100% 80%, 0 80%);
+        animation: waveDrift 8s ease-in-out infinite, waveSlide 22s linear infinite;
+      }
+
+      .hero-glow {
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(216, 211, 203, 0.18), transparent 70%);
+        top: -160px;
+        right: 12%;
+        filter: blur(10px);
+        opacity: 0.6;
+        animation: glowFloat 10s ease-in-out infinite;
+      }
+
+      .hero-stars {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(216, 211, 203, 0.6) 0.6px, transparent 0.6px);
+        background-size: 8px 8px;
+        opacity: 0.12;
+        animation: starTwinkle 6s ease-in-out infinite;
+      }
+
+      @keyframes gridShift {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(60px);
+        }
+      }
+
+      @keyframes waveDrift {
+        0%,
+        100% {
+          clip-path: polygon(0 45%, 25% 38%, 50% 42%, 70% 34%, 100% 40%, 100% 80%, 0 80%);
+        }
+        50% {
+          clip-path: polygon(0 48%, 22% 41%, 50% 44%, 72% 36%, 100% 42%, 100% 82%, 0 82%);
+        }
+      }
+
+      @keyframes waveSlide {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 120px 0;
+        }
+      }
+
+      @keyframes glowFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(18px);
+        }
+      }
+
+      @keyframes starTwinkle {
+        0%,
+        100% {
+          opacity: 0.1;
+        }
+        50% {
+          opacity: 0.18;
+        }
+      }
       }
 
       .hero-inner {
@@ -342,10 +415,6 @@
   </head>
   <body>
     <header>
-      <div class="container topline">
-        <span>FLOWGENIUS</span>
-        <span>AI AUTOMATION AGENCY</span>
-      </div>
       <div class="container nav">
         <div class="brand">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="FlowGenius Icon">
@@ -383,7 +452,9 @@
       <section class="hero" id="hero">
         <div class="hero-bg" aria-hidden="true">
           <div class="grid-mask"></div>
+          <div class="hero-stars"></div>
           <div class="dot-wave"></div>
+          <div class="hero-glow"></div>
         </div>
         <div class="container hero-inner">
           <span class="eyebrow">flowgenius.eu</span>
